@@ -1,17 +1,16 @@
 <?xml version="1.0" ?>
 <avtomat>
 	<begin id="1"></begin>
-	<end id="1"></end>
+	<end id="2"></end>
 	<nodes>
 		<node id="1" >
 			<destNode id="2">a</destNode>
 		</node>
 		<node id="2">
-			<destNode id="3">a</destNode>
-			<destNode id="1">b</destNode>
+			<destNode id="3">b</destNode>
 		</node>
 		<node id="3">
-			<destNode id="2">b</destNode>
+			<destNode id="1">a</destNode>
 		</node>
 	</nodes>
 </avtomat>

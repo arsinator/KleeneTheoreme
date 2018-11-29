@@ -197,7 +197,11 @@ def delete3(A):
 # print("".join(A))
 
 if __name__ == "__main__":
-    e = ET.parse('avtomat.xml').getroot()
+    try:
+        e = ET.parse('avtomat.xml').getroot()
+    except:
+        print("ERROR : atomat.xml file not found")
+        exit(0)
     beginNode = int(e.find("begin").get("id"))
     endNode = int(e.find("end").get("id"))
     e = e.find("nodes")
@@ -206,6 +210,7 @@ if __name__ == "__main__":
     klini([beginNode, endNode, numberOfNodes])
     A = list(filter(len, A))
     replace()
+    #Сделать вывод читабельнее
     delete1(A)
     delete2(A)
     delete3(A)
