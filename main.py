@@ -1,12 +1,5 @@
 import xml.etree.ElementTree as ET
 
-# e = ET.parse('avtomat.xml').getroot()
-# beginNode = int(e.find("begin").get("id"))
-# endNode = int(e.find("end").get("id"))
-# e = e.find("nodes")
-# A = []
-# numberOfNodes = len(e)
-
 def klini(a):
     b = a.copy()
     b[2]=b[2]-1
@@ -112,26 +105,91 @@ def replace():
                         j = j-1
                     continue
     #delete empty brackets
+    # p = len(A)
+    # j = 0
+    # while j<p :
+    #     if A[j] == "(" and ( A[j+1] == ")" or A[j+1] == ")*" ) :
+    #         if A[j+2] == "+" :
+    #             del A[j]
+    #             del A[j]
+    #             del A[j]
+    #             p = p-3
+    #             j = j-2
+    #         else :
+    #             del A[j]
+    #             del A[j]
+    #             p=p-2
+    #             j = j - 2
+    #     j = j+1
+
+#delete (())*
+def delete1(A):
     p = len(A)
     j = 0
-    while j<p :
-        if A[j] == "(" and ( A[j+1] == ")" or A[j+1] == ")*" ) :
-            if A[j+2] == "+" :
-                del A[j]
-                del A[j]
-                del A[j]
-                p = p-3
-                j = j-2
-            else :
-                del A[j]
-                del A[j]
-                p=p-2
-                j = j - 2
-        j = j+1
+    while j!=p:
+        if A[j] == "(" and A[j+3] == ")*":
+            del A[j]
+            del A[j]
+            del A[j]
+            del A[j]
+            p = p - 4
+            j = j -2
+        j = j + 1
 
+#delete ()() ()(?) (?)()
+def delete2(A):
+    p = len(A)
+    j = 0
+    while j!=p:
+        if A[j] == "(" and A[j+1] == ")" and A[j+2] == "(" and A[j+3] == ")":
+            del A[j]
+            del A[j]
+            del A[j]
+            del A[j]
+            del A[j-1]
+            p = p - 5
+            j = j -3
+        j = j + 1
+    p = len(A)
+    j = 0
+    while j != p: # (?)()
+        if A[j] == "(" and A[j + 2] == ")" and A[j + 3] == "(" and A[j + 4] == ")":
+            del A[j]
+            del A[j]
+            del A[j]
+            del A[j]
+            del A[j]
+            del A[j - 1]
+            p = p - 6
+            j = j - 3
+        j = j + 1
+    p = len(A)
+    j = 0
+    while j != p: # ()(?)
+        if A[j] == "(" and A[j + 1] == ")" and A[j + 2] == "(" and A[j + 4] == ")":
+            del A[j]
+            del A[j]
+            del A[j]
+            del A[j]
+            del A[j]
+            del A[j - 1]
+            p = p - 6
+            j = j - 3
+        j = j + 1
 
+#delete ()+
 
-
+def delete3(A):
+    p = len(A)
+    j = 0
+    while j != p: # ()(?)
+        if A[j] == "(" and A[j + 1] == ")" and A[j + 2] == "+":
+            del A[j]
+            del A[j]
+            del A[j]
+            p = p - 3
+            j = j - 2
+        j = j + 1
 
 # print(A)
 # replace()
@@ -148,8 +206,8 @@ if __name__ == "__main__":
     klini([beginNode, endNode, numberOfNodes])
     A = list(filter(len, A))
     replace()
+    delete1(A)
+    delete2(A)
+    delete3(A)
     print("".join(A))
 
-# ((a)(b))+ab(aab)*((aa)(b))
-# ab+(ab)(aab)*(aab)
-# a(ba)*b+(a(ba)*a)((b+aa)(ba)*a)*(a+(b+aa)(ba)*b)
